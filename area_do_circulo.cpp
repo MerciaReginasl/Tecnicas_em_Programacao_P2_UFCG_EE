@@ -12,3 +12,5 @@ int main() {
   return 0; //O programa executou com sucesso!
   
 }
+
+/* Alt Gr + 2 = m² */ 
