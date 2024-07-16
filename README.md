@@ -3,4 +3,5 @@ Códigos produzidos nas aulas de Técnicas em Programação do curso de Engenhar
 
 # Documentação C++
 
-link: https://cplusplus.com/
+links: https://cplusplus.com/
+       https://carlacastanho.github.io/Material-de-APC/index.html
