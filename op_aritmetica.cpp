@@ -6,10 +6,12 @@ Entrada
 
 Dois números reais, seguidos do símbolo (texto) da operação aritmética (“+”, “-”, “*” ou “/”), todos em linhas separadas, como nos exemplos.
 
-Saída */
+Saída 
 
-A mensagem: “Resultados da operação =”, sendo que “operação” será “adição”, “subtração”, “multiplicação ou divisão”, seguida do resultado calculado ou as mensagens: */
-/* "Operador inválido!" ou "Divisão por zero inválida!"  (veja os exemplos).*/
+A mensagem: “Resultados da operação =”, sendo que “operação” será “adição”, “subtração”, “multiplicação ou divisão”, seguida do resultado calculado ou as mensagens: 
+"Operador inválido!" ou "Divisão por zero inválida!"  (veja os exemplos).*/
+
+/*____________________________________________________________________________________________________*/
 
 #include <iostream>
 
