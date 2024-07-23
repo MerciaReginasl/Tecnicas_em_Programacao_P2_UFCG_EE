@@ -18,20 +18,33 @@ A mensagem: “Resultados da operação =”, sendo que “operação” será �
 using namespace std;
 
 int main() {
-  int num_1, num_12;
+  float num_1, num_2;
   string operador;
+  
   cout<<"Informe o primeiro numero: " ; cin >> num_1;
   cout <<"Informe o segundo numero: " ; cin >> num_2;
   cout <<"Informe o operador (+, -, * ou /): " ; cin >> operador;
-  
-  if (operador ++ "+");
-  cout << num_1 + num_2;
 
-  if (operador ++ "-");
-  cout << num_1 - num_2;
+  if (operador == "+"){
+    cout << "Resultados da operação = adição" << endl;
+    cout << num_1 + num_2 << endl;
+  }
+  else if (operador == "-"){
+    cout << "Resultados da operação = subtração" << endl;
+    cout << num_1 - num_2 << endl;
+  }
+  else if (operador == "*"){
+    cout << "Resultados da operação = multiplicação" << endl;
+    cout << num_1 * num_2 << endl;
+  }
+  else if (operador == "/" && num_2 != 0){
+    cout << "Resultados da operação = divisão" << endl;
+    cout << num_1 / num_2 << endl;
+  }
 
-  if (operador ++ "*");
-  cout << num_1 * num_2;
-
-  if (operador ++ "/");
-  cout << num_1 / num_2;
+  else if (operador == "/" && num_2 == 0){
+    cout << "Resultados por zero inválida!" << endl;
+  }
+  else
+    cout << "Operador inválido!" << endl;
+}
