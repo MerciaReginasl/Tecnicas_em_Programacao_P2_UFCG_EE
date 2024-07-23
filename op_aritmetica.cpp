@@ -1,12 +1,15 @@
-/*Faça um programa que leia dois números e um texto (string) contendo o símbolo de um operador aritmético (“+”, “-”, “*” ou “/”), referente a adição, subtração, multiplicação ou divisão, respectivamente, e mostre o resultado da operação correspondente aplicada aos valores lidos. As operações só serão realizadas com um operador válido e a divisão só será realizada se o quociente for diferente de zero.
+/* Faça um programa que leia dois números e um texto (string) contendo o símbolo de um operador aritmético (“+”, “-”, “*” ou “/”), */
+/* referente a adição, subtração, multiplicação ou divisão, respectivamente, e mostre o resultado da operação correspondente aplicada aos valores lidos. */
+/* As operações só serão realizadas com um operador válido e a divisão só será realizada se o quociente for diferente de zero.
 
 Entrada
 
 Dois números reais, seguidos do símbolo (texto) da operação aritmética (“+”, “-”, “*” ou “/”), todos em linhas separadas, como nos exemplos.
 
-Saída
+Saída */
 
-A mensagem: “Resultados da operação =”, sendo que “operação” será “adição”, “subtração”, “multiplicação ou divisão”, seguida do resultado calculado ou as mensagens: "Operador inválido!" ou "Divisão por zero inválida!"  (veja os exemplos).*/
+A mensagem: “Resultados da operação =”, sendo que “operação” será “adição”, “subtração”, “multiplicação ou divisão”, seguida do resultado calculado ou as mensagens: */
+/* "Operador inválido!" ou "Divisão por zero inválida!"  (veja os exemplos).*/
 
 #include <iostream>
 
