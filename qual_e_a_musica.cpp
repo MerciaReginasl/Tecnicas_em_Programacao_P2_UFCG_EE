@@ -1,91 +1,126 @@
 #include <iostream>
+#include <vector>
 #include <fstream>
 #include <sstream>
-#include <vector>
 #include <string>
-#include <ctime>
-
-using namespace std;
+#include <algorithm>
 
 struct Musica {
-    string titulo;
-    string artista;
-    int duracao;
-    string link;
+    std::string titulo;
+    std::string artista;
+    int duracao;   // duração em segundos
+    std::string link;
 };
 
-vector<Musica> carregarMusicas(const string& arquivoCsv) {
-    vector<Musica> musicas;
-    ifstream arquivo(arquivoCsv);
-    string linha;
+    std::vector<Musica> carregarMusicas(const std::string &musicas_iniciais.csv) {
+    std::vector<Musica> musicas;
+    std::ifstream file(musicas_iniciais.csv);
+    std::string linha;
 
-    while (getline(arquivo, linha)) {
-        stringstream ss(linha);
-        Musica musica;
-        getline(ss, musica.titulo, ',');
-        getline(ss, musica.artista, ',');
-        ss >> musica.duracao;
-        ss.ignore(); // Ignorar o caractere de nova linha após o inteiro
-        getline(ss, musica.link);
+    if (!file.is_open()) {
+        std::cerr << "Não foi possível abrir o arquivo: " << musicas_iniciais.csv << std::endl;
+        return musicas;
+    }
+
+    // Ignora a primeira linha (cabeçalho)
+    std::getline(file, linha);
+
+    while (std::getline(file, linha)) {
+        if (musicas.size() >= 20) break;
+
+        std::stringstream ss(linha);
+        std::string titulo, artista, duracao_str, link;
+        int duracao;
+
+        std::getline(ss, titulo, ',');
+        std::getline(ss, artista, ',');
+        std::getline(ss, duracao_str, ',');
+        std::getline(ss, link, ',');
+
+        duracao = std::stoi(duracao_str);
+
+        Musica musica = {titulo, artista, duracao, link};
         musicas.push_back(musica);
     }
 
+    file.close();
     return musicas;
 }
 
-void registrarTentativa(const string& nomeJogador, const string& mensagem) {
-    ofstream arquivo("jogo_" + nomeJogador + ".txt", ios::app);
-    arquivo << mensagem << endl;
-}
-
-int main() {
-    string nomeJogador;
-    cout << "Digite o nome do jogador: ";
-    getline(cin, nomeJogador);
-
-    vector<Musica> musicas = carregarMusicas("musicas_iniciais.csv");
-
-    if (musicas.empty()) {
-        cout << "Nenhuma música carregada." << endl;
-        return 1;
-    }
-
+void jogar(const std::string& nomeJogador, const std::vector<Musica>& musicas){
     int acertos = 0;
     int erros = 0;
 
-    for (const Musica& musica : musicas) {
-        if (acertos >= 3) {
-            cout << "VITÓRIA! PARABÉNS!!!!" << endl;
-            registrarTentativa(nomeJogador, "VITÓRIA! PARABÉNS!!!!");
-            break;
-        }
-        if (erros >= 3) {
-            cout << "VOCÊ FOI DERROTADO..." << endl;
-            registrarTentativa(nomeJogador, "VOCÊ FOI DERROTADO...");
-            break;
-        }
+    std::ofstream arquivoSaida("jogo_" + nomeJogador + ".txt");
 
-        string resposta;
-        cout << "Qual é a música? " << musica.link << " ";
-        getline(cin, resposta);
-
-        // Verificar resposta
-        if (resposta == musica.titulo) {
-            cout << "Resposta correta!" << endl;
-            registrarTentativa(nomeJogador, "Resposta correta para: " + musica.titulo);
-            acertos++;
-        } else {
-            cout << "Resposta errada. Tente novamente." << endl;
-            registrarTentativa(nomeJogador, "Resposta errada para: " + musica.titulo);
-            erros++;
-        }
+    if (!arquivoSaida.is_open()) {
+        std::cerr << "Não foi possível criar o arquivo de log do jogo." << std::endl;
+        return;
     }
 
-    // Se sair do loop sem atingir o objetivo de vitórias ou derrotas
-    if (acertos < 3 && erros < 3) {
-        cout << "Jogo terminado sem vitória ou derrota final." << endl;
-        registrarTentativa(nomeJogador, "Jogo terminado sem vitória ou derrota final.");
+    for (const auto& musica : musicas) {
+        std::string resposta;
+
+        while (erros < 3) {
+            std::cout << "Qual é a música? " << musica.link << std::endl;
+            std::getline(std::cin, resposta);
+
+            // Registro da tentativa no arquivo de log
+            arquivoSaida << "Resposta: " << resposta << std::endl;
+
+            // Normaliza a resposta e o título para comparação (ignorando case sensitivity)
+            std::string respostaNormalizada = resposta;
+            std::string tituloNormalizado = musica.titulo;
+
+            std::transform(respostaNormalizada.begin(), respostaNormalizada.end(), respostaNormalizada.begin(), ::tolower);
+            std::transform(tituloNormalizado.begin(), tituloNormalizado.end(), tituloNormalizado.begin(), ::tolower);
+
+            if (respostaNormalizada == tituloNormalizado) {
+                acertos++;
+                std::cout << "Acertou!" << std::endl;
+                break;
+            } else {
+                erros++;
+                std::cout << "Errou! Tentativa " << erros << " de 3." << std::endl;
+            }
+
+            if (erros == 3) {
+                std::cout << "VOCÊ FOI DERROTADO..." << std::endl;
+                arquivoSaida << "Jogo encerrado: DERROTA" << std::endl;
+                arquivoSaida.close();
+                return;
+            }
+        }
+
+        if (acertos == 3) {
+            std::cout << "VITÓRIA! PARABÉNS!!!!" << std::endl;
+            arquivoSaida << "Jogo encerrado: VITÓRIA" << std::endl;
+            arquivoSaida.close();
+            return;
+        }
+
+        // Reseta os erros para a próxima música
+        erros = 0;
     }
+
+    arquivoSaida.close();
+}
+
+int main() {
+    std::string nomeJogador;
+    std::cout << "Digite o nome do jogador: ";
+    std::getline(std::cin, nomeJogador);
+
+    std::vector<Musica> musicas = carregarMusicas("musicas_iniciais.csv");
+
+    if (musicas.empty()) {
+        std::cerr << "Nenhuma música foi carregada. O jogo não pode iniciar." << std::endl;
+        return 1;
+    }
+
+    jogar(nomeJogador, musicas);
 
     return 0;
 }
+
+
