@@ -6,3 +6,5 @@ Códigos produzidos nas aulas de Técnicas em Programação do curso de Engenhar
 links: https://cplusplus.com/
 
 link2: https://carlacastanho.github.io/Material-de-APC/index.html
+
+Link3: https://www.inf.ufpr.br/ci208/NotasAula.pdf
